@@ -1,2 +1,29 @@
 dist: precise
 language: php
+
+php:
+-  7.2
+addons:
+  mariadb: "10.4"
+
+cache:
+  directories:
+    - node_modules
+    - vendor
+  
+before_script:
+  # - phpenv global 7.2
+  # - cp .env.travis .env
+  # - sudo mysql -e 'CREATE DATABASE testing;'
+  - composer self-update
+  - composer install --no interaction
+  # - php artisan migrate --no-interaction -vvv
+
+script: 
+  - vendor/bin/phpunit
+
+notifications:
+  slack:
+    rooms:
+      - ifts16workspace:5iJkQ3l5dhBtFImJ01PNAtku#seminario
+    
